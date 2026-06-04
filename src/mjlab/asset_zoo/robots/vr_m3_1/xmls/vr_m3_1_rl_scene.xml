@@ -1,0 +1,10 @@
+<mujoco model="vr_m3_1">
+  <include file="vr_m3_1_rl.xml"/>
+  <include file="vr_m3_1_sensors.xml"/>
+  <!-- Actuators are added from vr_m3_1_constants.py. -->
+  <!-- <include file="vr_m3_1_actuators.xml"/> -->
+  <include file="scene.xml"/>
+  <keyframe>
+    <key name="home" qpos="0 0 0.854 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>

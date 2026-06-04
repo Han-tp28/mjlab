@@ -1,0 +1,9 @@
+<mujoco model="vr_h3_1">
+  <include file="vr_h3_1.xml"/>
+  <include file="vr_h3_1_sensors.xml"/>
+  <include file="vr_h3_1_actuators.xml"/>
+  <include file="scene.xml"/>
+  <keyframe>
+    <key name="home" qpos="0 0 0.85 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>
