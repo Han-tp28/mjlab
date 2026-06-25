@@ -36,6 +36,16 @@ class RslRlModelCfg:
   """Number of stacked RNN layers."""
   class_name: str = "MLPModel"
   """Model class name resolved by RSL-RL (MLPModel, CNNModel, or RNNModel)."""
+  smpl_obs_set: str = "actor_smpl"
+  g1_obs_set: str = "actor_g1"
+  teleop_obs_set: str = "actor_teleop"
+  tokenizer_obs_set: str = "tokenizer"
+  proprioception_obs_set: str = "proprioception"
+  encoder_names: Tuple[str, ...] = ("g1", "teleop", "smpl")
+  num_fsq_levels: int = 32
+  fsq_level_list: int = 32
+  max_num_tokens: int = 2
+  stiff_compliance_threshold: float = 0.01
 
 
 @dataclass
@@ -79,6 +89,10 @@ class RslRlPpoAlgorithmCfg:
   """Share CNN encoders between actor and critic."""
   class_name: str = "PPO"
   """Algorithm class name resolved by RSL-RL."""
+  aux_loss_coefs: dict[str, float] = field(default_factory=dict)
+  aux_loss_cap: float | None = None
+  """Upper bound on each aux (latent-distillation) loss term's contribution to
+  the total loss (UniversalTokenPPO only). None disables capping."""
 
 
 @dataclass
@@ -118,6 +132,10 @@ class RslRlBaseRunnerCfg:
   """The checkpoint file to load. Default is "model_.*.pt" (all). If regex expression,
   the latest (alphabetical order) matching file will be loaded.
   """
+  load_optimizer: bool = True
+  """Whether to restore optimizer state when resuming from a checkpoint."""
+  load_iteration: bool = True
+  """Whether to restore the iteration number from a resumed checkpoint."""
   clip_actions: float | None = None
   """The clipping range for action values. If None (default), no clipping is applied."""
   upload_model: bool = True

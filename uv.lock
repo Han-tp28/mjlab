@@ -1175,6 +1175,15 @@ wheels = [
 ]
 
 [[package]]
+name = "joblib"
+version = "1.5.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/f2/d34e8b3a08a9cc79a50b2208a93dce981fe615b64d5a4d4abee421d898df/joblib-1.5.3.tar.gz", hash = "sha256:8561a3269e6801106863fd0d6d84bb737be9e7631e33aaed3fb9ce5953688da3", size = 331603, upload-time = "2025-12-15T08:41:46.427Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7b/91/984aca2ec129e2757d1e4e3c81c3fcda9d0f85b74670a094cc443d9ee949/joblib-1.5.3-py3-none-any.whl", hash = "sha256:5fc3c5039fc5ca8c0276333a188bbd59d6b7ab37fe6632daa76bc7f9ec18e713", size = 309071, upload-time = "2025-12-15T08:41:44.973Z" },
+]
+
+[[package]]
 name = "jsonschema"
 version = "4.25.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1651,6 +1660,7 @@ version = "1.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "imageio-ffmpeg" },
+    { name = "joblib" },
     { name = "mediapy" },
     { name = "mjviser" },
     { name = "mujoco" },
@@ -1680,6 +1690,9 @@ cpu = [
 cu128 = [
     { name = "torch", version = "2.9.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'darwin' and extra == 'extra-5-mjlab-cu128') or (extra == 'extra-5-mjlab-cpu' and extra == 'extra-5-mjlab-cu128')" },
     { name = "torch", version = "2.9.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(sys_platform != 'darwin' and extra == 'extra-5-mjlab-cu128') or (extra == 'extra-5-mjlab-cpu' and extra == 'extra-5-mjlab-cu128')" },
+]
+teleop = [
+    { name = "pyopenxr" },
 ]
 
 [package.dev-dependencies]
@@ -1714,12 +1727,14 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "imageio-ffmpeg" },
+    { name = "joblib", specifier = ">=1.5.0" },
     { name = "mediapy", specifier = ">=1.2.6" },
     { name = "mjviser", git = "https://github.com/mujocolab/mjviser?rev=1bdfd6fe79066b847a5f430000fcfbb53ec31a6f" },
     { name = "mujoco", specifier = ">=3.8.0", index = "https://py.mujoco.org/" },
     { name = "mujoco-warp", git = "https://github.com/google-deepmind/mujoco_warp?rev=88b55fc2696960b927bc12584994bb8412b36558" },
     { name = "onnxscript", specifier = ">=0.5.4" },
     { name = "prettytable" },
+    { name = "pyopenxr", marker = "extra == 'teleop'", specifier = ">=1.0.0" },
     { name = "rsl-rl-lib", specifier = "==5.2.0" },
     { name = "tensorboard", specifier = ">=2.20.0" },
     { name = "tensordict" },
@@ -1737,7 +1752,7 @@ requires-dist = [
     { name = "warp-lang", marker = "sys_platform != 'darwin'", specifier = ">=1.12.0", index = "https://pypi.nvidia.com/" },
     { name = "warp-lang", marker = "sys_platform == 'darwin'", specifier = ">=1.12.0" },
 ]
-provides-extras = ["cu128", "cpu"]
+provides-extras = ["cu128", "cpu", "teleop"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -2958,6 +2973,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/6f/16/912b7225d56284859cd9a672827f18be43f8012f8b7b932bc4bd959a298e/pyopengl-3.1.10.tar.gz", hash = "sha256:c4a02d6866b54eb119c8e9b3fb04fa835a95ab802dd96607ab4cdb0012df8335", size = 1915580, upload-time = "2025-08-18T02:33:01.76Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/de/e4/1ba6f44e491c4eece978685230dde56b14d51a0365bc1b774ddaa94d14cd/pyopengl-3.1.10-py3-none-any.whl", hash = "sha256:794a943daced39300879e4e47bd94525280685f42dbb5a998d336cfff151d74f", size = 3194996, upload-time = "2025-08-18T02:32:59.902Z" },
+]
+
+[[package]]
+name = "pyopenxr"
+version = "1.1.5301"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "glfw" },
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11' or (extra == 'extra-5-mjlab-cpu' and extra == 'extra-5-mjlab-cu128')" },
+    { name = "numpy", version = "2.3.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11' or (extra == 'extra-5-mjlab-cpu' and extra == 'extra-5-mjlab-cu128')" },
+    { name = "pyopengl" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ac/65/220a2950833b4b862364defb9acb798ca9ed1b640c4e3fa3240c2c4c3834/pyopenxr-1.1.5301.tar.gz", hash = "sha256:7e6aa6fbaed930206385ac2c0bda641b2bae194cdbe62a2bb310f562dc1d4e17", size = 20135525, upload-time = "2025-10-18T21:36:16.01Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a8/0f/3703e541dc6e4163b8ea1c5a562cfb5c32515ffb1bb0f9f24d4c7db90c19/pyopenxr-1.1.5301-py3-none-any.whl", hash = "sha256:83da1ea6534e55cf5e88860870fa7cc48ec977a58bf173b3d4bfbc273926e3b2", size = 20362072, upload-time = "2025-10-18T21:36:00.27Z" },
 ]
 
 [[package]]

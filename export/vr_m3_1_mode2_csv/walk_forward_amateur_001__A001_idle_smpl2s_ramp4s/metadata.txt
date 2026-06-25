@@ -1,0 +1,15 @@
+motion: walk_forward_amateur_001__A001_idle_smpl2s_ramp4s
+frames: 2302
+encoder_input_mode2: (frames, 844)
+encoder layout: encoder_mode_4(4), smpl_joints_10frame_step1(720), smpl_anchor_orientation_10frame_step1(60), motion_joint_positions_wrists_10frame_step1(60)
+encoder_mode_4: [0, 0, 1, 0]
+smpl_y_up: true
+robot: vr_m3_1
+robot_action_dof: 27
+robot_joint_state_dof: 29
+hold_frames: 100
+ramp_frames: 200
+source_npz: /home/hantp/mjlab/data/vr_m3_1_npz/000000__stand_init_30s__IDLE.npz + /home/hantp/mjlab/export/vr_m3_1_mode2_csv/walk_forward_amateur_001__A001/metadata.txt
+source_idle_pkl: /home/hantp/Groot-WholeBodyControl/data/smpl_filtered/Idle_Left_001__A017.pkl
+source_walk_pkl: /home/hantp/Groot-WholeBodyControl/data/smpl_filtered/walk_forward_amateur_001__A001.pkl
+encoder_regenerated_relative_anchor: true

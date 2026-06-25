@@ -1,0 +1,11 @@
+motion: 220705__Idle_Left_001__A017
+frames: 3827
+encoder_input_mode2: (3827, 844)
+encoder layout: encoder_mode_4(4), smpl_joints_10frame_step1(720), smpl_anchor_orientation_10frame_step1(60), motion_joint_positions_wrists_10frame_step1(60)
+encoder_mode_4: [0, 0, 1, 0]
+smpl_y_up: true
+robot: vr_m3_1
+robot_action_dof: 27
+robot_joint_state_dof: 29
+source_npz: /home/hantp/mjlab/data/vr_m3_1_npz/220705__Idle_Left_001__A017.npz
+source_pkl: /home/hantp/Groot-WholeBodyControl/data/smpl_filtered/Idle_Left_001__A017.pkl

@@ -39,6 +39,7 @@ class PlayConfig:
   """Optional checkpoint name within the W&B run to load (e.g. 'model_4000.pt')."""
   checkpoint_file: str | None = None
   motion_file: str | None = None
+  encoder_source: Literal["auto", "g1", "teleop", "smpl"] = "auto"
   num_envs: int | None = None
   device: str | None = None
   video: bool = False
@@ -156,6 +157,20 @@ def run_play(task_id: str, cfg: PlayConfig):
         f"[INFO]: Loading checkpoint: {checkpoint_name} (run: {run_id}, {cached_str})"
       )
     log_dir = resume_path.parent
+
+  if is_tracking_task:
+    motion_cmd = env_cfg.commands["motion"]
+    assert isinstance(motion_cmd, MotionCommandCfg)
+    encoder_source = cfg.encoder_source
+    if encoder_source == "auto" and cfg.motion_file is not None:
+      suffix = Path(cfg.motion_file).suffix.lower()
+      if suffix in {".pkl", ".pickle"}:
+        encoder_source = "smpl"
+      elif suffix == ".npz":
+        encoder_source = "g1"
+    if encoder_source != "auto":
+      print(f"[INFO]: Forcing encoder source: {encoder_source}")
+      motion_cmd.forced_encoder_source = encoder_source
 
   if cfg.num_envs is not None:
     env_cfg.scene.num_envs = cfg.num_envs

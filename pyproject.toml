@@ -44,6 +44,7 @@ dependencies = [
   "mjviser>=0.0.14",
   "mediapy>=1.2.6",
   "imageio-ffmpeg",
+  "joblib>=1.5.0",
   "tensordict",
   "rsl-rl-lib==5.2.0",
   "tensorboard>=2.20.0",
@@ -66,6 +67,8 @@ csv-to-npz = "mjlab.scripts.csv_to_npz:cli"
 batch-csv-to-npz = "mjlab.scripts.batch_csv_to_npz:cli"
 shard-motions = "mjlab.scripts.shard_npz_motions:cli"
 normalize-motion-height = "mjlab.scripts.normalize_motion_height:cli"
+build-vr-m3-1-teleop-curriculum = "mjlab.scripts.build_vr_m3_1_teleop_curriculum:cli"
+vr-m3-1-teleop = "mjlab.tasks.tracking.config.vr_m3_1.teleop:main"
 
 [dependency-groups]
 dev = [
@@ -96,6 +99,9 @@ docs = [
 [project.optional-dependencies]
 cu128 = ["torch>=2.7.0"]
 cpu = ["torch>=2.7.0"]
+# Live VR teleoperation via OpenXR (real headset/controllers). Not required for
+# the 'mock'/'replay' teleop sources used in tests.
+teleop = ["pyopenxr>=1.0.0"]
 
 [tool.uv]
 conflicts = [

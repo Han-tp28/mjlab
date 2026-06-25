@@ -20,15 +20,44 @@ class MjlabOnPolicyRunner(OnPolicyRunner):
     log_dir: str | None = None,
     device: str = "cpu",
   ) -> None:
-    # Strip None-valued optional configs so MLPModel doesn't receive them.
+    # Strip optional/custom configs that the selected model class does not accept.
+    universal_opts = (
+      "smpl_obs_set",
+      "g1_obs_set",
+      "teleop_obs_set",
+      "tokenizer_obs_set",
+      "proprioception_obs_set",
+      "encoder_names",
+      "num_fsq_levels",
+      "fsq_level_list",
+      "max_num_tokens",
+      "stiff_compliance_threshold",
+    )
     for key in ("actor", "critic"):
       if key in train_cfg:
+        model_cfg = train_cfg[key]
         for opt in ("cnn_cfg", "distribution_cfg"):
-          if train_cfg[key].get(opt) is None:
-            train_cfg[key].pop(opt, None)
-        if train_cfg[key].get("rnn_type") is None:
+          if model_cfg.get(opt) is None:
+            model_cfg.pop(opt, None)
+        if model_cfg.get("rnn_type") is None:
           for opt in ("rnn_type", "rnn_hidden_dim", "rnn_num_layers"):
-            train_cfg[key].pop(opt, None)
+            model_cfg.pop(opt, None)
+        class_name = str(model_cfg.get("class_name", ""))
+        if (
+          "UniversalTokenActor" not in class_name
+          and "UniversalPoseActor" not in class_name
+        ):
+          for opt in universal_opts:
+            model_cfg.pop(opt, None)
+    if "algorithm" in train_cfg:
+      algorithm_cfg = train_cfg["algorithm"]
+      algorithm_class = str(algorithm_cfg.get("class_name", ""))
+      if (
+        "UniversalTokenPPO" not in algorithm_class
+        and "LatentAlignmentPPO" not in algorithm_class
+      ):
+        algorithm_cfg.pop("aux_loss_coefs", None)
+        algorithm_cfg.pop("aux_loss_cap", None)
     super().__init__(env, train_cfg, log_dir, device)
 
   def export_policy_to_onnx(

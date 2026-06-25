@@ -174,38 +174,42 @@ def main() -> None:
   for i, entry in enumerate(entries, start=1):
     path = resolve_motion_path(root, entry)
     if not path.exists():
-      rows.append({
-        "score": 999.0,
-        "motion": Path(entry).stem,
-        "path": str(path),
-        "duration_s": 0.0,
-        "root_z_min": 0.0,
-        "root_z_range": 0.0,
-        "body_z_min": 0.0,
-        "root_speed_xy_p95": 0.0,
-        "root_speed_z_p95": 0.0,
-        "root_ang_p95": 0.0,
-        "joint_vel_p95": 0.0,
-        "reasons": "missing_file",
-      })
+      rows.append(
+        {
+          "score": 999.0,
+          "motion": Path(entry).stem,
+          "path": str(path),
+          "duration_s": 0.0,
+          "root_z_min": 0.0,
+          "root_z_range": 0.0,
+          "body_z_min": 0.0,
+          "root_speed_xy_p95": 0.0,
+          "root_speed_z_p95": 0.0,
+          "root_ang_p95": 0.0,
+          "joint_vel_p95": 0.0,
+          "reasons": "missing_file",
+        }
+      )
       continue
     try:
       rows.append(score_motion(path))
     except Exception as exc:  # noqa: BLE001 - scanner should keep going.
-      rows.append({
-        "score": 999.0,
-        "motion": path.stem,
-        "path": str(path),
-        "duration_s": 0.0,
-        "root_z_min": 0.0,
-        "root_z_range": 0.0,
-        "body_z_min": 0.0,
-        "root_speed_xy_p95": 0.0,
-        "root_speed_z_p95": 0.0,
-        "root_ang_p95": 0.0,
-        "joint_vel_p95": 0.0,
-        "reasons": f"load_error:{type(exc).__name__}",
-      })
+      rows.append(
+        {
+          "score": 999.0,
+          "motion": path.stem,
+          "path": str(path),
+          "duration_s": 0.0,
+          "root_z_min": 0.0,
+          "root_z_range": 0.0,
+          "body_z_min": 0.0,
+          "root_speed_xy_p95": 0.0,
+          "root_speed_z_p95": 0.0,
+          "root_ang_p95": 0.0,
+          "joint_vel_p95": 0.0,
+          "reasons": f"load_error:{type(exc).__name__}",
+        }
+      )
     if i % 500 == 0:
       print(f"scanned {i}/{len(entries)}")
 
@@ -236,9 +240,7 @@ def main() -> None:
   print(f"motions={len(rows)} hard_score>={args.min_score:g}={len(hard)}")
   print(f"top {min(args.top, len(rows))}:")
   for row in rows[: args.top]:
-    print(
-      f"{row['score']}\t{row['motion']}\t{row['reasons']}\t{row['path']}"
-    )
+    print(f"{row['score']}\t{row['motion']}\t{row['reasons']}\t{row['path']}")
 
 
 if __name__ == "__main__":

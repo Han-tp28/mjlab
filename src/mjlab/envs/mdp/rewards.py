@@ -157,3 +157,17 @@ def flat_orientation_l2(
   """Penalize non-flat base orientation."""
   asset: Entity = env.scene[asset_cfg.name]
   return torch.sum(torch.square(asset.data.projected_gravity_b[:, :2]), dim=1)
+
+
+def body_angular_velocity_l2(
+  env: ManagerBasedRlEnv,
+  asset_cfg: SceneEntityCfg = _DEFAULT_ASSET_CFG,
+  axes: tuple[str, ...] = ("x", "y"),
+) -> torch.Tensor:
+  """Penalize excessive angular velocity on selected bodies."""
+  asset: Entity = env.scene[asset_cfg.name]
+  axis_ids = tuple({"x": 0, "y": 1, "z": 2}[axis] for axis in axes)
+  ang_vel = asset.data.body_link_ang_vel_w[:, asset_cfg.body_ids, :]
+  selected_ang_vel = ang_vel[..., axis_ids]
+  body_cost = torch.sum(torch.square(selected_ang_vel), dim=-1)
+  return torch.mean(body_cost, dim=-1)

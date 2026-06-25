@@ -143,25 +143,53 @@ class MotionTrackingOnPolicyRunner(MjlabOnPolicyRunner):
       else 0.0
     )
 
+    fall_keys = tuple(
+      key.strip()
+      for key in motion_term.cfg.motion_curriculum_fall_termination_keys.split(",")
+      if key.strip()
+    )
+    stats["fall_rate"] = self._compute_fall_rate(self.logger.ep_extras, fall_keys)
+    return stats
+
+  @staticmethod
+  def _compute_fall_rate(
+    ep_extras: list[dict[str, torch.Tensor | float]],
+    fall_termination_keys: tuple[str, ...],
+  ) -> float:
+    """Fraction of done episodes counted as a "fall" for curriculum gating.
+
+    By default (``fall_termination_keys=()``) every non-timeout termination
+    counts, which conflates literal instability with recoverable tracking
+    misses (e.g. anchor_xy, ee_body_pos) already covered by the
+    error_body_pos/error_anchor_pos gate checks. Restricting to the literal
+    fall keys (e.g. fell_over_height/orientation) lets the gate pass on a
+    policy that is stable but still imperfectly tracking a hard motion.
+    """
+    fall_term_names = (
+      {f"Episode_Termination/{name}" for name in fall_termination_keys}
+      if fall_termination_keys
+      else None
+    )
     time_out_count = 0.0
     failed_count = 0.0
-    for ep_info in self.logger.ep_extras:
+    fall_count = 0.0
+    for ep_info in ep_extras:
       for key, value in ep_info.items():
         if not key.startswith("Episode_Termination/"):
           continue
-        if isinstance(value, torch.Tensor):
-          count = float(value.detach().sum().cpu().item())
-        else:
-          count = float(value)
+        count = (
+          float(value.detach().sum().cpu().item())
+          if isinstance(value, torch.Tensor)
+          else float(value)
+        )
         if key == "Episode_Termination/time_out":
           time_out_count += count
-        else:
-          failed_count += count
+          continue
+        failed_count += count
+        if fall_term_names is None or key in fall_term_names:
+          fall_count += count
     total_done_count = failed_count + time_out_count
-    stats["fall_rate"] = (
-      failed_count / total_done_count if total_done_count > 0 else 0.0
-    )
-    return stats
+    return fall_count / total_done_count if total_done_count > 0 else 0.0
 
   def _mean_logged_episode_extra(self, key: str) -> float | None:
     values = []
@@ -294,6 +322,23 @@ class MotionTrackingOnPolicyRunner(MjlabOnPolicyRunner):
     cast(torch.Tensor, self._motion_local_timeout_counts).zero_()
     for counts in self._motion_local_term_counts.values():
       counts.zero_()
+
+  def _update_replay_failure_weights(self, motion_term: MotionCommand) -> None:
+    """Push lifetime per-motion failure rates into the loader for replay biasing.
+
+    Uses the persistent ``_motion_outcome_counts`` (accumulated across all
+    resamples and keyed by source file), so motions that have historically
+    failed more are replayed more often even after they leave the active pool.
+    """
+    weights = {
+      source_file: (
+        float(record["fail_count"]) / float(record["done_count"])
+        if float(record["done_count"]) > 0.0
+        else 0.0
+      )
+      for source_file, record in self._motion_outcome_counts.items()
+    }
+    motion_term.motion.set_replay_failure_weights(weights)
 
   def _write_motion_failure_report(
     self, iteration: int, motion_term: MotionCommand | None = None
@@ -443,8 +488,15 @@ class MotionTrackingOnPolicyRunner(MjlabOnPolicyRunner):
       self._motion_curriculum_last_reload_iteration = None
       return None
 
+    force_after_iterations = motion_term.cfg.motion_curriculum_force_after_iterations
     if self._motion_curriculum_last_reload_iteration is None:
-      self._motion_curriculum_last_reload_iteration = iteration + 1
+      if force_after_iterations is None or force_after_iterations <= 0:
+        self._motion_curriculum_last_reload_iteration = iteration + 1
+      else:
+        current_iteration = iteration + 1
+        self._motion_curriculum_last_reload_iteration = (
+          current_iteration // force_after_iterations
+        ) * force_after_iterations
 
     passed, failures = self._motion_curriculum_gate_passed(
       motion_term, curriculum_stats
@@ -469,7 +521,6 @@ class MotionTrackingOnPolicyRunner(MjlabOnPolicyRunner):
     if (iteration + 1) % interval != 0:
       return None
 
-    force_after_iterations = motion_term.cfg.motion_curriculum_force_after_iterations
     iterations_since_reload = (
       iteration + 1 - self._motion_curriculum_last_reload_iteration
     )
@@ -478,27 +529,33 @@ class MotionTrackingOnPolicyRunner(MjlabOnPolicyRunner):
       and iterations_since_reload >= force_after_iterations
     )
 
-    if not force_reload:
+    min_stable_iterations = motion_term.cfg.motion_curriculum_min_stable_iterations
+    gate_ready = passed and stable_iterations >= min_stable_iterations
+
+    if not gate_ready and not force_reload:
       if not passed:
         print(
           "[INFO] Holding motion curriculum at iteration "
           f"{iteration + 1}: active {motion_term.motion.num_motions}/"
           f"{motion_term.motion.num_available_motions}; "
+          f"no reload for {iterations_since_reload}/"
+          f"{force_after_iterations} iterations; "
           f"stats: {self._format_motion_curriculum_stats(curriculum_stats)}; "
           f"waiting for {', '.join(failures)}"
         )
         return None
-      min_stable_iterations = motion_term.cfg.motion_curriculum_min_stable_iterations
-      if stable_iterations < min_stable_iterations:
-        print(
-          "[INFO] Holding motion curriculum at iteration "
-          f"{iteration + 1}: active {motion_term.motion.num_motions}/"
-          f"{motion_term.motion.num_available_motions}; "
-          f"gate stable for {stable_iterations}/{min_stable_iterations} iterations; "
-          f"stats: {self._format_motion_curriculum_stats(curriculum_stats)}"
-        )
-        return None
-    else:
+      print(
+        "[INFO] Holding motion curriculum at iteration "
+        f"{iteration + 1}: active {motion_term.motion.num_motions}/"
+        f"{motion_term.motion.num_available_motions}; "
+        f"gate stable for {stable_iterations}/{min_stable_iterations} iterations; "
+        f"no reload for {iterations_since_reload}/"
+        f"{force_after_iterations} iterations; "
+        f"stats: {self._format_motion_curriculum_stats(curriculum_stats)}"
+      )
+      return None
+
+    if force_reload and not gate_ready:
       reason = (
         "gate passed but stable window not reached"
         if passed
@@ -519,6 +576,9 @@ class MotionTrackingOnPolicyRunner(MjlabOnPolicyRunner):
       motion_term.cfg.num_new_motions_per_resample = (
         target_num_motions - motion_term.motion.num_motions
       )
+
+    if motion_term.cfg.motion_replay_failure_weighted:
+      self._update_replay_failure_weights(motion_term)
 
     if not motion_term.reload_motion_library():
       return None

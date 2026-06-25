@@ -238,3 +238,32 @@ def test_out_of_terrain_bounds_includes_border_width(mock_grid_terrain_env):
   asset.data.root_link_pos_w[1, 0] = 42.0  # Past border edge (limit 41.7m).
   result = out_of_terrain_bounds(env)
   assert not result[0] and result[1]
+
+
+def _yaw_quat_wxyz(angles: torch.Tensor) -> torch.Tensor:
+  """Build wxyz quaternions for pure yaw rotations of the given angles (rad)."""
+  half = angles / 2
+  out = torch.zeros(angles.shape[0], 4, dtype=torch.float32)
+  out[:, 0] = torch.cos(half)
+  out[:, 3] = torch.sin(half)
+  return out
+
+
+def test_bad_anchor_yaw_fires_on_heading_error():
+  """bad_anchor_yaw must fire on yaw drift, unlike the tilt-only bad_anchor_ori."""
+  from mjlab.tasks.tracking.mdp.terminations import bad_anchor_yaw
+
+  device = get_test_device()
+  ref_yaw = torch.zeros(3, device=device)
+  # env0 aligned, env1 off by 90 deg (> 1.0 rad), env2 off by 30 deg (< 1.0 rad).
+  robot_yaw = torch.tensor([0.0, torch.pi / 2, torch.pi / 6], device=device)
+
+  command = Mock()
+  command.anchor_quat_w = _yaw_quat_wxyz(ref_yaw).to(device)
+  command.robot_anchor_quat_w = _yaw_quat_wxyz(robot_yaw).to(device)
+
+  env = Mock()
+  env.command_manager.get_term = Mock(return_value=command)
+
+  result = bad_anchor_yaw(env, command_name="motion", threshold=1.0)
+  assert not result[0] and result[1] and not result[2]

@@ -24,3 +24,12 @@ MUJOCO_GL=egl uv run play Mjlab-Tracking-Flat-VR-H3-1 \
   --num-envs 1 \
   --no-terminations True \
   --device cuda:0
+
+
+
+
+
+/home/hantp/mjlab/.venv/bin/python /home/hantp/mjlab/scripts/export_actor_only_onnx_for_deploy.py \
+  --checkpoint <đường_dẫn_đến_checkpoint_pt_của_bạn> \
+  --output /home/hantp/vinrobotics_mjlab/mjlab/config/policy/motion_tracking/keyboard/exported/policy.onnx \
+  --input-layout full

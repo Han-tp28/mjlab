@@ -1,0 +1,6 @@
+motion: stand_init_30s__IDLE_mode2_frozen_row0
+frames: 1500
+source_mode2: /home/hantp/mjlab/export/vr_m3_1_mode2_csv/stand_init_30s__IDLE_mode2
+frozen_first_data_row: true
+velocity_csv_zeroed: true
+purpose: deploy idle candidate to emulate Groot held init
