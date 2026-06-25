@@ -56,7 +56,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Jun 25, 2026"/>
   </head>
   
   
@@ -426,15 +426,44 @@ document.write(`
     <span class="n">log_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="c1"># Strip None-valued optional configs so MLPModel doesn&#39;t receive them.</span>
+    <span class="c1"># Strip optional/custom configs that the selected model class does not accept.</span>
+    <span class="n">universal_opts</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="s2">&quot;smpl_obs_set&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;g1_obs_set&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;teleop_obs_set&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;tokenizer_obs_set&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;proprioception_obs_set&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;encoder_names&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;num_fsq_levels&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;fsq_level_list&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;max_num_tokens&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;stiff_compliance_threshold&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;actor&quot;</span><span class="p">,</span> <span class="s2">&quot;critic&quot;</span><span class="p">):</span>
       <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">train_cfg</span><span class="p">:</span>
+        <span class="n">model_cfg</span> <span class="o">=</span> <span class="n">train_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;cnn_cfg&quot;</span><span class="p">,</span> <span class="s2">&quot;distribution_cfg&quot;</span><span class="p">):</span>
-          <span class="k">if</span> <span class="n">train_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">train_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">train_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rnn_type&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">model_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model_cfg</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rnn_type&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
           <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;rnn_type&quot;</span><span class="p">,</span> <span class="s2">&quot;rnn_hidden_dim&quot;</span><span class="p">,</span> <span class="s2">&quot;rnn_num_layers&quot;</span><span class="p">):</span>
-            <span class="n">train_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">model_cfg</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">model_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span>
+          <span class="s2">&quot;UniversalTokenActor&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">class_name</span>
+          <span class="ow">and</span> <span class="s2">&quot;UniversalPoseActor&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">class_name</span>
+        <span class="p">):</span>
+          <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">universal_opts</span><span class="p">:</span>
+            <span class="n">model_cfg</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;algorithm&quot;</span> <span class="ow">in</span> <span class="n">train_cfg</span><span class="p">:</span>
+      <span class="n">algorithm_cfg</span> <span class="o">=</span> <span class="n">train_cfg</span><span class="p">[</span><span class="s2">&quot;algorithm&quot;</span><span class="p">]</span>
+      <span class="n">algorithm_class</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+      <span class="k">if</span> <span class="p">(</span>
+        <span class="s2">&quot;UniversalTokenPPO&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">algorithm_class</span>
+        <span class="ow">and</span> <span class="s2">&quot;LatentAlignmentPPO&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">algorithm_class</span>
+      <span class="p">):</span>
+        <span class="n">algorithm_cfg</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;aux_loss_coefs&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">algorithm_cfg</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;aux_loss_cap&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">train_cfg</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
@@ -603,7 +632,7 @@ By The mjlab Developers
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Jun 04, 2026.
+  Last updated on Jun 25, 2026.
   <br/>
 </p>
   </div>

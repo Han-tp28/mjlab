@@ -58,7 +58,7 @@
     <link rel="prev" title="Research" href="research.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Jun 25, 2026"/>
   </head>
   
   
@@ -463,33 +463,34 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-version-not-yet-released">Upcoming version (not yet released)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#changed">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Changed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-0-april-14-2026">Version 1.3.0 (April 14, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-0-march-6-2026">Version 1.2.0 (March 6, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-1-february-14-2026">Version 1.1.1 (February 14, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Fixed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Changed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-0-february-12-2026">Version 1.1.0 (February 12, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-0-january-28-2026">Version 1.0.0 (January 28, 2026)</a></li>
@@ -508,9 +509,141 @@ document.write(`
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
 <section id="upcoming-version-not-yet-released">
 <h2>Upcoming version (not yet released)<a class="headerlink" href="#upcoming-version-not-yet-released" title="Link to this heading">#</a></h2>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">UniversalTokenPPO</span></code> now supports an <code class="docutils literal notranslate"><span class="pre">aux_loss_cap</span></code> that bounds each
+cross-encoder latent-distillation loss term’s contribution to the total loss
+(default <code class="docutils literal notranslate"><span class="pre">None</span></code> = off; the VR M3.1 Pose recipe sets <code class="docutils literal notranslate"><span class="pre">8.0</span></code>). The latent
+losses are unbounded MSEs with coefficient 1.0; when a batch of hard new
+motions entered the curriculum the teleop/smpl latents diverged from the g1
+teacher and a latent loss spiked ~100x (~2 to ~220), dominating the gradient
+and pulling the shared trunk to chase a target computed on an already
+destabilising policy. The result was an unrecoverable blow-up (value-loss
+spike, action-std explosion, global reward collapse from ~400 to ~25)
+triggered by motions the policy could otherwise have learned. The cap scales
+a spiking term by <code class="docutils literal notranslate"><span class="pre">min(1,</span> <span class="pre">cap/|loss|)</span></code> (detached denominator), bounding its
+gradient magnitude while preserving direction, so a local hard-motion
+difficulty stays a recoverable high-error episode instead of a catastrophe.
+Resume-compatible (no observation, network, or weight change).</p></li>
+<li><p>The VR M3.1 Pose task now uses the dense multi-body tracking reward recipe
+(body position/orientation, body linear/angular velocity, lower-body, feet
+orientation, and per-limb joint-position terms) ported from the proven
+multi-motion tracking run, instead of a single dominant local-body-position
+term. The single-term reward tracked one or two motions crisply but went
+loose (~7 cm) and sluggish across many motions because nothing constrained
+velocity, orientation, or joint angles. The teleop 3-encoder architecture is
+unchanged.</p></li>
+<li><p>The VR M3.1 Pose task now adds an <code class="docutils literal notranslate"><span class="pre">anchor_xy</span></code> termination
+(<code class="docutils literal notranslate"><span class="pre">bad_anchor_xy</span></code>, threshold 0.8 m) and widens <code class="docutils literal notranslate"><span class="pre">motion_global_root_pos</span></code>’s
+<code class="docutils literal notranslate"><span class="pre">std</span></code> from 0.3 to 0.6. The previous <code class="docutils literal notranslate"><span class="pre">anchor_pos</span></code> termination only checks
+root height, so horizontal root drift was unpunished; combined with the
+narrow reward std (whose gradient vanishes past ~0.6 m of error), the policy
+learned to ignore the root-translation command and march in place once
+enough motions were in the pool, even though the encoders can now see where
+the root should go. These changes are resume-compatible (no observation or
+network changes).</p></li>
+<li><p>The VR M3.1 Pose task now tightens foot tracking: <code class="docutils literal notranslate"><span class="pre">motion_feet_pos</span></code> goes
+from weight 0.6 / std 0.3 to 0.8 / 0.2, and a new one-sided
+<code class="docutils literal notranslate"><span class="pre">motion_feet_swing_clearance</span></code> term (<code class="docutils literal notranslate"><span class="pre">motion_feet_swing_clearance_error_exp</span></code>,
+weight 2.0, std 0.03) penalises a foot only when it is below the reference
+foot height. The loose feet reward barely penalised a few-cm vertical
+under-lift, so the policy converged on a minimal-effort shuffle (dragging the
+swing foot ~2 cm instead of the reference ~6 cm) to turn and step; this
+affected every encoder equally, including <code class="docutils literal notranslate"><span class="pre">g1</span></code>, confirming a reward-shaping
+issue rather than an encoder-input one. A symmetric foot-height reward does
+not fix it because stance frames dominate the episode average and dilute the
+swing phase, so the one-sided clearance term (zero during stance, active only
+on under-lift) is used instead.</p></li>
+<li><p>The VR M3.1 Pose task now restores a heading (yaw) recovery gradient by
+widening and strengthening <code class="docutils literal notranslate"><span class="pre">motion_global_root_ori</span></code> (std 0.4 to 0.7, weight
+0.5 to 0.75). The existing <code class="docutils literal notranslate"><span class="pre">bad_anchor_ori</span></code> termination compares the
+projected-gravity z-component of the two anchor frames, which measures
+pitch/roll but is invariant to yaw, so an upright robot facing the wrong way
+never tripped it; the only absolute heading signal was the <code class="docutils literal notranslate"><span class="pre">root_ori</span></code> reward,
+whose gradient vanishes past ~50 deg of error at std 0.4. With heading
+effectively unconstrained, once turn-in-place motions entered the curriculum
+pool the policy abandoned rotation (anchor rotation error jumped from ~0.09 to
+~1.1 rad and never recovered) and shuffled its feet in place instead of
+turning, while body-relative pose tracking stayed good. A hard yaw termination
+(<code class="docutils literal notranslate"><span class="pre">bad_anchor_yaw</span></code>) was tried as a backstop and removed: a robot legitimately
+lagging a fast 188 deg sweep transiently exceeds any threshold that also
+catches the shuffle failure (steady ~57 deg), so the two cannot be separated
+by instantaneous yaw error, and at 1.0 rad the termination fired on nearly
+every env once larger turns entered the pool, collapsing mean episode length
+from ~1485 to ~260 and reward from ~430 to ~58. The wider reward alone tracked
+heading well (root_ori reward ~0.72, anchor rotation error ~0.09) in the window
+before the termination began firing. The <code class="docutils literal notranslate"><span class="pre">bad_anchor_yaw</span></code> helper is kept (a
+yaw-aware quaternion error) but is no longer wired into the task. This change
+is resume-compatible (no observation or network changes).</p></li>
+<li><p>The VR M3.1 Pose task now adds a second, wider-std copy of the swing
+clearance term, <code class="docutils literal notranslate"><span class="pre">motion_feet_swing_clearance_coarse</span></code> (weight 1.0, std
+0.10). Turn-in-place motions lift the feet much higher than walking
+(~0.10-0.14 m vs ~0.06 m), so once heading tracking was fixed the existing
+<code class="docutils literal notranslate"><span class="pre">motion_feet_swing_clearance</span></code> term (std 0.03, tuned for walking-scale
+under-lift) saturated flat at turn-scale under-lift and gave no gradient to
+lift the feet higher, so the robot turned correctly but shuffled instead of
+stepping. This mirrors the existing arm joint position fine/coarse pattern
+and is resume-compatible (no observation or network changes).</p></li>
+<li><p>The motion tracking curriculum gate’s <code class="docutils literal notranslate"><span class="pre">fall_rate</span></code> metric now has an
+optional <code class="docutils literal notranslate"><span class="pre">motion_curriculum_fall_termination_keys</span></code> (<code class="docutils literal notranslate"><span class="pre">MotionCommandCfg</span></code>)
+to restrict which terminations count as a “fall”. Previously every
+non-timeout termination counted, conflating literal instability with
+recoverable tracking misses (e.g. <code class="docutils literal notranslate"><span class="pre">anchor_xy</span></code>, <code class="docutils literal notranslate"><span class="pre">ee_body_pos</span></code>) that are
+already covered by the <code class="docutils literal notranslate"><span class="pre">error_body_pos</span></code>/<code class="docutils literal notranslate"><span class="pre">error_anchor_pos</span></code> gate checks.
+In one VR M3.1 Pose run, recomputing <code class="docutils literal notranslate"><span class="pre">fall_rate</span></code> from the literal-fall
+terminations only (<code class="docutils literal notranslate"><span class="pre">fell_over_height</span></code>, <code class="docutils literal notranslate"><span class="pre">fell_over_orientation</span></code>,
+<code class="docutils literal notranslate"><span class="pre">knee_ground_contact</span></code>) stayed under 1.3% in every iteration bucket of the
+entire run, including a window where the old fall_rate hit 1.0 – the robot
+was never actually falling, just drifting past <code class="docutils literal notranslate"><span class="pre">anchor_xy</span></code> while upright.
+The old, broad definition made the gate’s stable window nearly unreachable,
+so pool growth happened almost exclusively through the
+<code class="docutils literal notranslate"><span class="pre">motion_curriculum_force_after_iterations</span></code> override rather than the gate
+ever genuinely passing. Default behavior (key unset) is unchanged for other
+tasks.</p></li>
+</ul>
+</section>
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>The VR M3.1 Pose teleop (<code class="docutils literal notranslate"><span class="pre">teleop</span></code>) and SMPL (<code class="docutils literal notranslate"><span class="pre">smpl</span></code>) encoders now receive
+the root-translation command (future reference-root positions in the
+robot-anchor frame), the same signal the <code class="docutils literal notranslate"><span class="pre">g1</span></code> encoder already gets inside
+<code class="docutils literal notranslate"><span class="pre">command_multi_future</span></code>. Previously these two encoders only saw root
+orientation and root-local pose, so the deploy/teleop policy could not track
+global root position and marched in place (anchor error stuck high) once the
+encoder curriculum ramped them in. With the translation command the robot
+follows the operator’s root (walk/jump). Under live teleop the signal is
+supplied through <code class="docutils literal notranslate"><span class="pre">MotionCommand.set_live_teleop</span></code>’s new
+<code class="docutils literal notranslate"><span class="pre">anchor_pos_b_multi_future</span></code> argument. This changes the teleop/smpl encoder
+input dimensions, so existing Pose checkpoints must be retrained.</p></li>
+<li><p>Added Groot-style failure-weighted streaming replay for tracking motion
+curricula. Set <code class="docutils literal notranslate"><span class="pre">motion_replay_failure_weighted=True</span></code> to bias which seen
+motions are kept in the streaming pool toward those with higher lifetime
+failure rates (hard-negative mining), with a uniform floor so mastered
+motions are still revisited. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> (uniform replay).</p></li>
+<li><p>Added an adaptive height threshold to the <code class="docutils literal notranslate"><span class="pre">bad_motion_body_pos</span></code>
+termination (<code class="docutils literal notranslate"><span class="pre">threshold_adaptive</span></code>/<code class="docutils literal notranslate"><span class="pre">down_threshold</span></code>/
+<code class="docutils literal notranslate"><span class="pre">root_height_threshold</span></code>): the body-position tolerance is relaxed for
+environments whose reference root is low (e.g. a deep squat), so the policy
+learns to go as low as it safely can instead of being terminated for
+under-tracking an unreachable pose.</p></li>
+<li><p>Added live VR teleoperation for the VR M3.1 pose policy
+(<code class="docutils literal notranslate"><span class="pre">mjlab.tasks.tracking.config.vr_m3_1.teleop</span></code> / <code class="docutils literal notranslate"><span class="pre">vr-m3-1-teleop</span></code>). The
+headset and two controllers (OpenXR) drive the three teleop targets each
+control step and the trained policy produces the full-body motion. A new
+<code class="docutils literal notranslate"><span class="pre">mjlab.tasks.tracking.teleop</span></code> module provides the pose sources
+(<code class="docutils literal notranslate"><span class="pre">OpenXrPoseSource</span></code> plus <code class="docutils literal notranslate"><span class="pre">mock</span></code>/<code class="docutils literal notranslate"><span class="pre">replay</span></code> sources that need no hardware)
+and the retargeter; <code class="docutils literal notranslate"><span class="pre">MotionCommand.set_live_teleop</span></code> injects the live
+targets. Install OpenXR support with the <code class="docutils literal notranslate"><span class="pre">teleop</span></code> extra.</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">Mjlab-Tracking-Flat-VR-M3-1-Pose</span></code> task for paired robot-motion
+and SMPL pose training with pelvis-local body-point observations, Cartesian
+tracking rewards, a dual-encoder actor, and latent-alignment PPO.</p></li>
+<li><p>Added support for loading tracking motions from <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> and <code class="docutils literal notranslate"><span class="pre">.pickle</span></code> files.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">build-vr-m3-1-teleop-curriculum</span></code> and a
+<code class="docutils literal notranslate"><span class="pre">Mjlab-Tracking-Flat-VR-M3-1-Teleop-Robust</span></code> task for from-scratch
+VR M3.1 training that gradually mixes clean motion data with teleop
+recovery clips.</p></li>
 <li><p>Added the VR H3.1 humanoid model to the asset zoo.</p></li>
 <li><p>Added the VR M3.1 humanoid model to the asset zoo with flat terrain
 motion-tracking task configs.</p></li>
@@ -555,8 +688,8 @@ prefixed and scattered via <code class="docutils literal notranslate"><span clas
 Contribution by &#64;omarrayyann.</p></li>
 </ul>
 </section>
-<section id="changed">
-<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h3>Changed<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Bumped <code class="docutils literal notranslate"><span class="pre">mujoco</span></code> to 3.8 and <code class="docutils literal notranslate"><span class="pre">mujoco-warp</span></code> to 3.8.0. The <code class="docutils literal notranslate"><span class="pre">multiccd</span></code>
 enable flag was removed in mujoco 3.8 (it became default-on), so configs
@@ -672,8 +805,8 @@ latent.</p></li>
 </section>
 <section id="version-1-3-0-april-14-2026">
 <h2>Version 1.3.0 (April 14, 2026)<a class="headerlink" href="#version-1-3-0-april-14-2026" title="Link to this heading">#</a></h2>
-<section id="id1">
-<h3>Added<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h3>Added<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">ManagerBasedRlEnvCfg.auto_reset</span></code> flag. When <code class="docutils literal notranslate"><span class="pre">True</span></code> (default),
 <code class="docutils literal notranslate"><span class="pre">step()</span></code> continues to reset done environments in place and returns the
@@ -750,8 +883,8 @@ alongside RGB and depth, and a multi-cube goal-conditioned lifting task
 Contribution by &#64;pthangeda.</p></li>
 </ul>
 </section>
-<section id="id2">
-<h3>Changed<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>Changed<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Renamed the <code class="docutils literal notranslate"><span class="pre">list_envs</span></code> console script to <code class="docutils literal notranslate"><span class="pre">list-envs</span></code> for consistency
 with the other hyphenated entry points (<code class="docutils literal notranslate"><span class="pre">viz-nan</span></code>, <code class="docutils literal notranslate"><span class="pre">export-scene</span></code>).
@@ -799,8 +932,8 @@ Use <code class="docutils literal notranslate"><span class="pre">qfrc_actuator</
 corrupted metadata (<a class="extlink-issue reference external" href="https://github.com/mujocolab/mjlab/issues/898">#898</a>).</p></li>
 </ul>
 </section>
-<section id="id3">
-<h3>Fixed<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>Fixed<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">train</span></code> and <code class="docutils literal notranslate"><span class="pre">play</span></code> now print a top-level usage message when invoked
 with <code class="docutils literal notranslate"><span class="pre">-h</span></code> / <code class="docutils literal notranslate"><span class="pre">--help</span></code> and no task argument, pointing users at
@@ -883,8 +1016,8 @@ or <code class="docutils literal notranslate"><span class="pre">noise_std_type</
 migrated on load.</p></li>
 </ul>
 </div>
-<section id="id4">
-<h3>Added<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>Added<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;step&quot;</span></code> event mode that fires every environment step.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">apply_body_impulse</span></code> event for applying transient external wrenches
@@ -1000,8 +1133,8 @@ that <code class="docutils literal notranslate"><span class="pre">MjSpec.to_xml(
 <code class="docutils literal notranslate"><span class="pre">mjlab.utils.xml</span></code>.</p></li>
 </ul>
 </section>
-<section id="id8">
-<h3>Changed<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h3>Changed<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Native viewer now syncs <code class="docutils literal notranslate"><span class="pre">xfrc_applied</span></code> to the render buffer and draws
 arrows for any nonzero applied forces. Mouse perturbation forces are
@@ -1035,8 +1168,8 @@ environments around the focused env instead of first N envs.</p></li>
 stacked shadows when robots are close.</p></li>
 </ul>
 </section>
-<section id="id9">
-<h3>Fixed<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h3>Fixed<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fixed actuator target resolution for entities whose <code class="docutils literal notranslate"><span class="pre">spec_fn</span></code> uses
 internal <code class="docutils literal notranslate"><span class="pre">MjSpec.attach(prefix=...)</span></code>
@@ -1068,8 +1201,8 @@ such as <code class="docutils literal notranslate"><span class="pre">VideoRecord
 </section>
 <section id="version-1-1-1-february-14-2026">
 <h2>Version 1.1.1 (February 14, 2026)<a class="headerlink" href="#version-1-1-1-february-14-2026" title="Link to this heading">#</a></h2>
-<section id="id13">
-<h3>Added<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<section id="id14">
+<h3>Added<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Added reward term visualization to the native viewer (toggle with <code class="docutils literal notranslate"><span class="pre">P</span></code>) (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/629">#629</a>).</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">DifferentialIKAction</span></code> for task-space control via damped
@@ -1078,8 +1211,8 @@ soft joint-limit avoidance, and null-space posture regularization.
 Includes an interactive viser demo (<code class="docutils literal notranslate"><span class="pre">scripts/demos/differential_ik.py</span></code>) (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/632">#632</a>).</p></li>
 </ul>
 </section>
-<section id="id16">
-<h3>Fixed<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<section id="id17">
+<h3>Fixed<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">play.py</span></code> defaulting to the base rsl-rl <code class="docutils literal notranslate"><span class="pre">OnPolicyRunner</span></code> instead
 of <code class="docutils literal notranslate"><span class="pre">MjlabOnPolicyRunner</span></code>, which caused a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> from an unexpected
@@ -1087,8 +1220,8 @@ of <code class="docutils literal notranslate"><span class="pre">MjlabOnPolicyRun
 <a class="reference external" href="https://github.com/griffinaddison">&#64;griffinaddison</a>.</p></li>
 </ul>
 </section>
-<section id="id18">
-<h3>Changed<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<section id="id19">
+<h3>Changed<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Removed <code class="docutils literal notranslate"><span class="pre">body_mass</span></code>, <code class="docutils literal notranslate"><span class="pre">body_inertia</span></code>, <code class="docutils literal notranslate"><span class="pre">body_pos</span></code>, and <code class="docutils literal notranslate"><span class="pre">body_quat</span></code>
 from <code class="docutils literal notranslate"><span class="pre">FIELD_SPECS</span></code> in domain randomization. These fields have derived
@@ -1105,8 +1238,8 @@ handles cloud storage paths (GCS, S3) natively (<a class="reference external" hr
 </section>
 <section id="version-1-1-0-february-12-2026">
 <h2>Version 1.1.0 (February 12, 2026)<a class="headerlink" href="#version-1-1-0-february-12-2026" title="Link to this heading">#</a></h2>
-<section id="id21">
-<h3>Added<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<section id="id22">
+<h3>Added<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Added RGB and depth camera sensors and BVH-accelerated raycasting (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/597">#597</a>).</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">MetricsManager</span></code> for logging custom metrics during training (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/596">#596</a>).</p></li>
@@ -1127,8 +1260,8 @@ tabs unified into a single Groups tab) (<a class="reference external" href="http
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">env_ids</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">Entity.write_ctrl_to_sim</span></code> (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/567">#567</a>).</p></li>
 </ul>
 </section>
-<section id="id29">
-<h3>Changed<a class="headerlink" href="#id29" title="Link to this heading">#</a></h3>
+<section id="id30">
+<h3>Changed<a class="headerlink" href="#id30" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Upgraded <code class="docutils literal notranslate"><span class="pre">rsl-rl-lib</span></code> to 4.0.0 and replaced the custom ONNX
 exporter with rsl-rl’s built-in <code class="docutils literal notranslate"><span class="pre">as_onnx()</span></code> (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/589">#589</a>, <a class="reference external" href="https://github.com/mujocolab/mjlab/pull/595">#595</a>).</p></li>
@@ -1138,8 +1271,8 @@ loop. See <a class="reference internal" href="faq.html#faq-sim-forward"><span cl
 <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> during entity init (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/545">#545</a>).</p></li>
 </ul>
 </section>
-<section id="id34">
-<h3>Fixed<a class="headerlink" href="#id34" title="Link to this heading">#</a></h3>
+<section id="id35">
+<h3>Fixed<a class="headerlink" href="#id35" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">randomize_pd_gains</span></code> crash with <code class="docutils literal notranslate"><span class="pre">num_envs</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/564">#564</a>).</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">ctrl_ids</span></code> index error with multiple actuated entities (<a class="reference external" href="https://github.com/mujocolab/mjlab/pull/573">#573</a>).
@@ -1195,33 +1328,34 @@ Contribution by <a class="reference external" href="https://github.com/oxkitsune
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#upcoming-version-not-yet-released">Upcoming version (not yet released)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#changed">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Changed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3-0-april-14-2026">Version 1.3.0 (April 14, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2-0-march-6-2026">Version 1.2.0 (March 6, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-1-february-14-2026">Version 1.1.1 (February 14, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Fixed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Changed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1-0-february-12-2026">Version 1.1.0 (February 12, 2026)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Added</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id29">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">Changed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id35">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-0-january-28-2026">Version 1.0.0 (January 28, 2026)</a></li>
@@ -1258,7 +1392,7 @@ By The mjlab Developers
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Jun 04, 2026.
+  Last updated on Jun 25, 2026.
   <br/>
 </p>
   </div>

@@ -56,7 +56,7 @@
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Jun 25, 2026"/>
   </head>
   
   
@@ -588,10 +588,10 @@ document.write(`
 </li>
       <li><a href="source/api/terrains.html#mjlab.terrains.TerrainGeneratorCfg.add_lights">add_lights (mjlab.terrains.TerrainGeneratorCfg attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/rl.html#mjlab.rl.RslRlOnPolicyRunnerCfg.algorithm">algorithm (mjlab.rl.RslRlOnPolicyRunnerCfg attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/terrains.html#mjlab.terrains.HfWaveTerrainCfg.amplitude_range">amplitude_range (mjlab.terrains.HfWaveTerrainCfg attribute)</a>
 </li>
       <li><a href="source/api/entity.html#mjlab.entity.EntityCfg.InitialStateCfg.ang_vel">ang_vel (mjlab.entity.EntityCfg.InitialStateCfg attribute)</a>
@@ -621,6 +621,10 @@ document.write(`
       <li><a href="source/api/viewer.html#mjlab.viewer.ViewerConfig.OriginType.AUTO">AUTO (mjlab.viewer.ViewerConfig.OriginType attribute)</a>
 </li>
       <li><a href="source/api/envs.html#mjlab.envs.ManagerBasedRlEnvCfg.auto_reset">auto_reset (mjlab.envs.ManagerBasedRlEnvCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlPpoAlgorithmCfg.aux_loss_cap">aux_loss_cap (mjlab.rl.RslRlPpoAlgorithmCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlPpoAlgorithmCfg.aux_loss_coefs">aux_loss_coefs (mjlab.rl.RslRlPpoAlgorithmCfg attribute)</a>
 </li>
       <li><a href="source/api/viewer.html#mjlab.viewer.ViewerConfig.azimuth">azimuth (mjlab.viewer.ViewerConfig attribute)</a>
 </li>
@@ -1142,6 +1146,8 @@ document.write(`
 </li>
       <li><a href="source/api/sim.html#mjlab.sim.MujocoCfg.enableflags">enableflags (mjlab.sim.MujocoCfg attribute)</a>
 </li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.encoder_names">encoder_names (mjlab.rl.RslRlModelCfg attribute)</a>
+</li>
       <li><a href="source/api/scene.html#mjlab.scene.SceneCfg.entities">entities (mjlab.scene.SceneCfg attribute)</a>
 </li>
       <li><a href="source/api/entity.html#mjlab.entity.Entity">Entity (class in mjlab.entity)</a>
@@ -1264,13 +1270,15 @@ document.write(`
 </li>
       <li><a href="source/api/actuator.html#mjlab.actuator.ActuatorCfg.frictionloss">frictionloss (mjlab.actuator.ActuatorCfg attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/sensor.html#mjlab.sensor.BuiltinSensor.from_existing">from_existing() (mjlab.sensor.BuiltinSensor class method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/sensor.html#mjlab.sensor.PinholeCameraPatternCfg.from_intrinsic_matrix">from_intrinsic_matrix() (mjlab.sensor.PinholeCameraPatternCfg class method)</a>
 </li>
       <li><a href="source/api/sensor.html#mjlab.sensor.PinholeCameraPatternCfg.from_mujoco_camera">from_mujoco_camera() (mjlab.sensor.PinholeCameraPatternCfg class method)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.fsq_level_list">fsq_level_list (mjlab.rl.RslRlModelCfg attribute)</a>
 </li>
       <li><a href="source/api/managers.html#mjlab.managers.ManagerTermBaseCfg.func">func (mjlab.managers.ManagerTermBaseCfg attribute)</a>
 
@@ -1322,6 +1330,8 @@ document.write(`
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.g1_obs_set">g1_obs_set (mjlab.rl.RslRlModelCfg attribute)</a>
+</li>
       <li><a href="source/api/rl.html#mjlab.rl.RslRlPpoAlgorithmCfg.gamma">gamma (mjlab.rl.RslRlPpoAlgorithmCfg attribute)</a>
 </li>
       <li><a href="source/api/terrains.html#mjlab.terrains.BoxNestedRingsTerrainCfg.gap_range">gap_range (mjlab.terrains.BoxNestedRingsTerrainCfg attribute)</a>
@@ -1608,10 +1618,10 @@ document.write(`
 </li>
       <li><a href="source/api/tasks.html#mjlab.tasks.registry.list_tasks">list_tasks() (in module mjlab.tasks.registry)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/actuator.html#mjlab.actuator.BuiltinMuscleActuatorCfg.lmax">lmax (mjlab.actuator.BuiltinMuscleActuatorCfg attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/actuator.html#mjlab.actuator.BuiltinMuscleActuatorCfg.lmin">lmin (mjlab.actuator.BuiltinMuscleActuatorCfg attribute)</a>
 </li>
       <li><a href="source/api/rl.html#mjlab.rl.MjlabOnPolicyRunner.load">load() (mjlab.rl.MjlabOnPolicyRunner method)</a>
@@ -1620,7 +1630,11 @@ document.write(`
 </li>
       <li><a href="source/api/tasks.html#mjlab.tasks.registry.load_env_cfg">load_env_cfg() (in module mjlab.tasks.registry)</a>
 </li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlBaseRunnerCfg.load_iteration">load_iteration (mjlab.rl.RslRlBaseRunnerCfg attribute)</a>
+</li>
       <li><a href="source/api/envs.html#mjlab.envs.ManagerBasedRlEnv.load_managers">load_managers() (mjlab.envs.ManagerBasedRlEnv method)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlBaseRunnerCfg.load_optimizer">load_optimizer (mjlab.rl.RslRlBaseRunnerCfg attribute)</a>
 </li>
       <li><a href="source/api/tasks.html#mjlab.tasks.registry.load_rl_cfg">load_rl_cfg() (in module mjlab.tasks.registry)</a>
 </li>
@@ -1681,6 +1695,8 @@ document.write(`
       <li><a href="source/api/rl.html#mjlab.rl.RslRlBaseRunnerCfg.max_iterations">max_iterations (mjlab.rl.RslRlBaseRunnerCfg attribute)</a>
 </li>
       <li><a href="source/api/terrains.html#mjlab.terrains.BoxRandomGridTerrainCfg.max_merge_distance">max_merge_distance (mjlab.terrains.BoxRandomGridTerrainCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.max_num_tokens">max_num_tokens (mjlab.rl.RslRlModelCfg attribute)</a>
 </li>
       <li><a href="source/api/terrains.html#mjlab.terrains.BoxRandomGridTerrainCfg.merge_similar_heights">merge_similar_heights (mjlab.terrains.BoxRandomGridTerrainCfg attribute)</a>
 </li>
@@ -1882,6 +1898,8 @@ document.write(`
       </ul></li>
       <li><a href="source/api/sensor.html#mjlab.sensor.RayCastSensor.num_frames">num_frames (mjlab.sensor.RayCastSensor property)</a>
 </li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.num_fsq_levels">num_fsq_levels (mjlab.rl.RslRlModelCfg attribute)</a>
+</li>
       <li><a href="source/api/rl.html#mjlab.rl.RslRlPpoAlgorithmCfg.num_learning_epochs">num_learning_epochs (mjlab.rl.RslRlPpoAlgorithmCfg attribute)</a>
 </li>
       <li><a href="source/api/rl.html#mjlab.rl.RslRlPpoAlgorithmCfg.num_mini_batches">num_mini_batches (mjlab.rl.RslRlPpoAlgorithmCfg attribute)</a>
@@ -2057,6 +2075,8 @@ document.write(`
       <li><a href="source/api/entity.html#mjlab.entity.EntityData.projected_gravity_b">projected_gravity_b (mjlab.entity.EntityData property)</a>
 </li>
       <li><a href="source/api/terrains.html#mjlab.terrains.SubTerrainCfg.proportion">proportion (mjlab.terrains.SubTerrainCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.proprioception_obs_set">proprioception_obs_set (mjlab.rl.RslRlModelCfg attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2360,10 +2380,10 @@ document.write(`
 </li>
       <li><a href="source/api/sim.html#mjlab.sim.Simulation">Simulation (class in mjlab.sim)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/sim.html#mjlab.sim.SimulationCfg">SimulationCfg (class in mjlab.sim)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/api/entity.html#mjlab.entity.EntityData.site_ang_vel_w">site_ang_vel_w (mjlab.entity.EntityData property)</a>
 </li>
       <li><a href="source/api/managers.html#mjlab.managers.SceneEntityCfg.site_ids">site_ids (mjlab.managers.SceneEntityCfg attribute)</a>
@@ -2389,6 +2409,8 @@ document.write(`
 </li>
       </ul></li>
       <li><a href="source/api/terrains.html#mjlab.terrains.HfPyramidSlopedTerrainCfg.slope_range">slope_range (mjlab.terrains.HfPyramidSlopedTerrainCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.smpl_obs_set">smpl_obs_set (mjlab.rl.RslRlModelCfg attribute)</a>
 </li>
       <li><a href="source/api/entity.html#mjlab.entity.EntityArticulationInfoCfg.soft_joint_pos_limit_factor">soft_joint_pos_limit_factor (mjlab.entity.EntityArticulationInfoCfg attribute)</a>
 </li>
@@ -2427,6 +2449,8 @@ document.write(`
 </li>
       </ul></li>
       <li><a href="source/api/terrains.html#mjlab.terrains.BoxOpenStairsTerrainCfg.step_width_range">step_width_range (mjlab.terrains.BoxOpenStairsTerrainCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.stiff_compliance_threshold">stiff_compliance_threshold (mjlab.rl.RslRlModelCfg attribute)</a>
 </li>
       <li><a href="source/api/actuator.html#mjlab.actuator.BuiltinPositionActuatorCfg.stiffness">stiffness (mjlab.actuator.BuiltinPositionActuatorCfg attribute)</a>
 
@@ -2479,6 +2503,8 @@ document.write(`
       <li><a href="source/api/actuator.html#mjlab.actuator.ActuatorCfg.target_names_expr">target_names_expr (mjlab.actuator.ActuatorCfg attribute)</a>
 </li>
       <li><a href="source/api/actuator.html#mjlab.actuator.BuiltinMuscleActuatorCfg.tausmooth">tausmooth (mjlab.actuator.BuiltinMuscleActuatorCfg attribute)</a>
+</li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.teleop_obs_set">teleop_obs_set (mjlab.rl.RslRlModelCfg attribute)</a>
 </li>
       <li><a href="source/api/managers.html#mjlab.managers.SceneEntityCfg.tendon_ids">tendon_ids (mjlab.managers.SceneEntityCfg attribute)</a>
 </li>
@@ -2534,6 +2560,8 @@ document.write(`
         <li><a href="source/api/scene.html#mjlab.scene.Scene.to_zip">(mjlab.scene.Scene method)</a>
 </li>
       </ul></li>
+      <li><a href="source/api/rl.html#mjlab.rl.RslRlModelCfg.tokenizer_obs_set">tokenizer_obs_set (mjlab.rl.RslRlModelCfg attribute)</a>
+</li>
       <li><a href="source/api/sim.html#mjlab.sim.MujocoCfg.tolerance">tolerance (mjlab.sim.MujocoCfg attribute)</a>
 </li>
       <li><a href="source/api/sim.html#mjlab.sim.TorchArray">TorchArray (class in mjlab.sim)</a>
@@ -2770,7 +2798,7 @@ By The mjlab Developers
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Jun 04, 2026.
+  Last updated on Jun 25, 2026.
   <br/>
 </p>
   </div>

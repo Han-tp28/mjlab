@@ -56,7 +56,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Jun 04, 2026"/>
+    <meta name="docbuild:last-update" content="Jun 25, 2026"/>
   </head>
   
   
@@ -439,7 +439,17 @@ document.write(`
   <span class="n">rnn_num_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Number of stacked RNN layers.&quot;&quot;&quot;</span>
   <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;MLPModel&quot;</span>
-<span class="w">  </span><span class="sd">&quot;&quot;&quot;Model class name resolved by RSL-RL (MLPModel, CNNModel, or RNNModel).&quot;&quot;&quot;</span></div>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Model class name resolved by RSL-RL (MLPModel, CNNModel, or RNNModel).&quot;&quot;&quot;</span>
+  <span class="n">smpl_obs_set</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;actor_smpl&quot;</span>
+  <span class="n">g1_obs_set</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;actor_g1&quot;</span>
+  <span class="n">teleop_obs_set</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;actor_teleop&quot;</span>
+  <span class="n">tokenizer_obs_set</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tokenizer&quot;</span>
+  <span class="n">proprioception_obs_set</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;proprioception&quot;</span>
+  <span class="n">encoder_names</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;g1&quot;</span><span class="p">,</span> <span class="s2">&quot;teleop&quot;</span><span class="p">,</span> <span class="s2">&quot;smpl&quot;</span><span class="p">)</span>
+  <span class="n">num_fsq_levels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span>
+  <span class="n">fsq_level_list</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span>
+  <span class="n">max_num_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">stiff_compliance_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span></div>
 
 
 
@@ -485,7 +495,11 @@ document.write(`
   <span class="n">share_cnn_encoders</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Share CNN encoders between actor and critic.&quot;&quot;&quot;</span>
   <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PPO&quot;</span>
-<span class="w">  </span><span class="sd">&quot;&quot;&quot;Algorithm class name resolved by RSL-RL.&quot;&quot;&quot;</span></div>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Algorithm class name resolved by RSL-RL.&quot;&quot;&quot;</span>
+  <span class="n">aux_loss_coefs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+  <span class="n">aux_loss_cap</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Upper bound on each aux (latent-distillation) loss term&#39;s contribution to</span>
+<span class="sd">  the total loss (UniversalTokenPPO only). None disables capping.&quot;&quot;&quot;</span></div>
 
 
 
@@ -528,6 +542,10 @@ document.write(`
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;The checkpoint file to load. Default is &quot;model_.*.pt&quot; (all). If regex expression,</span>
 <span class="sd">  the latest (alphabetical order) matching file will be loaded.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">load_optimizer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Whether to restore optimizer state when resuming from a checkpoint.&quot;&quot;&quot;</span>
+  <span class="n">load_iteration</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Whether to restore the iteration number from a resumed checkpoint.&quot;&quot;&quot;</span>
   <span class="n">clip_actions</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;The clipping range for action values. If None (default), no clipping is applied.&quot;&quot;&quot;</span>
   <span class="n">upload_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
@@ -604,7 +622,7 @@ By The mjlab Developers
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Jun 04, 2026.
+  Last updated on Jun 25, 2026.
   <br/>
 </p>
   </div>

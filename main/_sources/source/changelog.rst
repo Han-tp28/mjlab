@@ -5,9 +5,140 @@ Changelog
 Upcoming version (not yet released)
 -----------------------------------
 
+Changed
+^^^^^^^
+
+- ``UniversalTokenPPO`` now supports an ``aux_loss_cap`` that bounds each
+  cross-encoder latent-distillation loss term's contribution to the total loss
+  (default ``None`` = off; the VR M3.1 Pose recipe sets ``8.0``). The latent
+  losses are unbounded MSEs with coefficient 1.0; when a batch of hard new
+  motions entered the curriculum the teleop/smpl latents diverged from the g1
+  teacher and a latent loss spiked ~100x (~2 to ~220), dominating the gradient
+  and pulling the shared trunk to chase a target computed on an already
+  destabilising policy. The result was an unrecoverable blow-up (value-loss
+  spike, action-std explosion, global reward collapse from ~400 to ~25)
+  triggered by motions the policy could otherwise have learned. The cap scales
+  a spiking term by ``min(1, cap/|loss|)`` (detached denominator), bounding its
+  gradient magnitude while preserving direction, so a local hard-motion
+  difficulty stays a recoverable high-error episode instead of a catastrophe.
+  Resume-compatible (no observation, network, or weight change).
+- The VR M3.1 Pose task now uses the dense multi-body tracking reward recipe
+  (body position/orientation, body linear/angular velocity, lower-body, feet
+  orientation, and per-limb joint-position terms) ported from the proven
+  multi-motion tracking run, instead of a single dominant local-body-position
+  term. The single-term reward tracked one or two motions crisply but went
+  loose (~7 cm) and sluggish across many motions because nothing constrained
+  velocity, orientation, or joint angles. The teleop 3-encoder architecture is
+  unchanged.
+- The VR M3.1 Pose task now adds an ``anchor_xy`` termination
+  (``bad_anchor_xy``, threshold 0.8 m) and widens ``motion_global_root_pos``'s
+  ``std`` from 0.3 to 0.6. The previous ``anchor_pos`` termination only checks
+  root height, so horizontal root drift was unpunished; combined with the
+  narrow reward std (whose gradient vanishes past ~0.6 m of error), the policy
+  learned to ignore the root-translation command and march in place once
+  enough motions were in the pool, even though the encoders can now see where
+  the root should go. These changes are resume-compatible (no observation or
+  network changes).
+- The VR M3.1 Pose task now tightens foot tracking: ``motion_feet_pos`` goes
+  from weight 0.6 / std 0.3 to 0.8 / 0.2, and a new one-sided
+  ``motion_feet_swing_clearance`` term (``motion_feet_swing_clearance_error_exp``,
+  weight 2.0, std 0.03) penalises a foot only when it is below the reference
+  foot height. The loose feet reward barely penalised a few-cm vertical
+  under-lift, so the policy converged on a minimal-effort shuffle (dragging the
+  swing foot ~2 cm instead of the reference ~6 cm) to turn and step; this
+  affected every encoder equally, including ``g1``, confirming a reward-shaping
+  issue rather than an encoder-input one. A symmetric foot-height reward does
+  not fix it because stance frames dominate the episode average and dilute the
+  swing phase, so the one-sided clearance term (zero during stance, active only
+  on under-lift) is used instead.
+- The VR M3.1 Pose task now restores a heading (yaw) recovery gradient by
+  widening and strengthening ``motion_global_root_ori`` (std 0.4 to 0.7, weight
+  0.5 to 0.75). The existing ``bad_anchor_ori`` termination compares the
+  projected-gravity z-component of the two anchor frames, which measures
+  pitch/roll but is invariant to yaw, so an upright robot facing the wrong way
+  never tripped it; the only absolute heading signal was the ``root_ori`` reward,
+  whose gradient vanishes past ~50 deg of error at std 0.4. With heading
+  effectively unconstrained, once turn-in-place motions entered the curriculum
+  pool the policy abandoned rotation (anchor rotation error jumped from ~0.09 to
+  ~1.1 rad and never recovered) and shuffled its feet in place instead of
+  turning, while body-relative pose tracking stayed good. A hard yaw termination
+  (``bad_anchor_yaw``) was tried as a backstop and removed: a robot legitimately
+  lagging a fast 188 deg sweep transiently exceeds any threshold that also
+  catches the shuffle failure (steady ~57 deg), so the two cannot be separated
+  by instantaneous yaw error, and at 1.0 rad the termination fired on nearly
+  every env once larger turns entered the pool, collapsing mean episode length
+  from ~1485 to ~260 and reward from ~430 to ~58. The wider reward alone tracked
+  heading well (root_ori reward ~0.72, anchor rotation error ~0.09) in the window
+  before the termination began firing. The ``bad_anchor_yaw`` helper is kept (a
+  yaw-aware quaternion error) but is no longer wired into the task. This change
+  is resume-compatible (no observation or network changes).
+- The VR M3.1 Pose task now adds a second, wider-std copy of the swing
+  clearance term, ``motion_feet_swing_clearance_coarse`` (weight 1.0, std
+  0.10). Turn-in-place motions lift the feet much higher than walking
+  (~0.10-0.14 m vs ~0.06 m), so once heading tracking was fixed the existing
+  ``motion_feet_swing_clearance`` term (std 0.03, tuned for walking-scale
+  under-lift) saturated flat at turn-scale under-lift and gave no gradient to
+  lift the feet higher, so the robot turned correctly but shuffled instead of
+  stepping. This mirrors the existing arm joint position fine/coarse pattern
+  and is resume-compatible (no observation or network changes).
+- The motion tracking curriculum gate's ``fall_rate`` metric now has an
+  optional ``motion_curriculum_fall_termination_keys`` (``MotionCommandCfg``)
+  to restrict which terminations count as a "fall". Previously every
+  non-timeout termination counted, conflating literal instability with
+  recoverable tracking misses (e.g. ``anchor_xy``, ``ee_body_pos``) that are
+  already covered by the ``error_body_pos``/``error_anchor_pos`` gate checks.
+  In one VR M3.1 Pose run, recomputing ``fall_rate`` from the literal-fall
+  terminations only (``fell_over_height``, ``fell_over_orientation``,
+  ``knee_ground_contact``) stayed under 1.3% in every iteration bucket of the
+  entire run, including a window where the old fall_rate hit 1.0 -- the robot
+  was never actually falling, just drifting past ``anchor_xy`` while upright.
+  The old, broad definition made the gate's stable window nearly unreachable,
+  so pool growth happened almost exclusively through the
+  ``motion_curriculum_force_after_iterations`` override rather than the gate
+  ever genuinely passing. Default behavior (key unset) is unchanged for other
+  tasks.
+
 Added
 ^^^^^
 
+- The VR M3.1 Pose teleop (``teleop``) and SMPL (``smpl``) encoders now receive
+  the root-translation command (future reference-root positions in the
+  robot-anchor frame), the same signal the ``g1`` encoder already gets inside
+  ``command_multi_future``. Previously these two encoders only saw root
+  orientation and root-local pose, so the deploy/teleop policy could not track
+  global root position and marched in place (anchor error stuck high) once the
+  encoder curriculum ramped them in. With the translation command the robot
+  follows the operator's root (walk/jump). Under live teleop the signal is
+  supplied through ``MotionCommand.set_live_teleop``'s new
+  ``anchor_pos_b_multi_future`` argument. This changes the teleop/smpl encoder
+  input dimensions, so existing Pose checkpoints must be retrained.
+- Added Groot-style failure-weighted streaming replay for tracking motion
+  curricula. Set ``motion_replay_failure_weighted=True`` to bias which seen
+  motions are kept in the streaming pool toward those with higher lifetime
+  failure rates (hard-negative mining), with a uniform floor so mastered
+  motions are still revisited. Defaults to ``False`` (uniform replay).
+- Added an adaptive height threshold to the ``bad_motion_body_pos``
+  termination (``threshold_adaptive``/``down_threshold``/
+  ``root_height_threshold``): the body-position tolerance is relaxed for
+  environments whose reference root is low (e.g. a deep squat), so the policy
+  learns to go as low as it safely can instead of being terminated for
+  under-tracking an unreachable pose.
+- Added live VR teleoperation for the VR M3.1 pose policy
+  (``mjlab.tasks.tracking.config.vr_m3_1.teleop`` / ``vr-m3-1-teleop``). The
+  headset and two controllers (OpenXR) drive the three teleop targets each
+  control step and the trained policy produces the full-body motion. A new
+  ``mjlab.tasks.tracking.teleop`` module provides the pose sources
+  (``OpenXrPoseSource`` plus ``mock``/``replay`` sources that need no hardware)
+  and the retargeter; ``MotionCommand.set_live_teleop`` injects the live
+  targets. Install OpenXR support with the ``teleop`` extra.
+- Added a ``Mjlab-Tracking-Flat-VR-M3-1-Pose`` task for paired robot-motion
+  and SMPL pose training with pelvis-local body-point observations, Cartesian
+  tracking rewards, a dual-encoder actor, and latent-alignment PPO.
+- Added support for loading tracking motions from ``.pkl`` and ``.pickle`` files.
+- Added ``build-vr-m3-1-teleop-curriculum`` and a
+  ``Mjlab-Tracking-Flat-VR-M3-1-Teleop-Robust`` task for from-scratch
+  VR M3.1 training that gradually mixes clean motion data with teleop
+  recovery clips.
 - Added the VR H3.1 humanoid model to the asset zoo.
 - Added the VR M3.1 humanoid model to the asset zoo with flat terrain
   motion-tracking task configs.
